@@ -8,7 +8,7 @@ import { DeliveryRepositoryLiveLayer } from "./infrastructure/db/delivery-reposi
 import { ReviewRepositoryLiveLayer } from "./infrastructure/db/review-repository-layer";
 import { OpenRouterLayer } from "./infrastructure/llm/openrouter-layer";
 import { GitHubClientLayer } from "./infrastructure/github/github-client-layer";
-import { BunqueueLayer } from "./infrastructure/queue/bunqueue-layer";
+import { BunqueueLayer, setJobProcessor } from "./infrastructure/queue/bunqueue-layer";
 import {
   ReviewBriefService,
   makeReviewBriefService,
@@ -66,6 +66,16 @@ const main = Effect.gen(function* () {
   const runtime = ManagedRuntime.make(LiveLayer);
 
   const runEffect = (effect: Effect.Effect<any, any, any>) => runtime.runPromise(effect);
+
+  // Wire job processor to call the review pipeline
+  setJobProcessor(async (data) => {
+    await runtime.runPromise(
+      Effect.gen(function* () {
+        const service = yield* PrReviewService;
+        yield* service.processReview(data);
+      }),
+    );
+  });
 
   const app = new Elysia()
     .use(webhookPlugin(config.webhookSecret, runEffect))

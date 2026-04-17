@@ -5,6 +5,12 @@ import { type JobData, JobQueue, QueueError } from "../../application/ports/job-
 const makeJobId = (data: JobData): string =>
   `pr-review:${data.owner}/${data.repo}#${data.prNumber}`;
 
+let jobProcessor: ((data: JobData) => Promise<void>) | null = null;
+
+export function setJobProcessor(fn: (data: JobData) => Promise<void>): void {
+  jobProcessor = fn;
+}
+
 export const BunqueueLayer = Layer.scoped(
   JobQueue,
   Effect.gen(function* () {
@@ -16,7 +22,11 @@ export const BunqueueLayer = Layer.scoped(
       embedded: true,
       dataPath,
       processor: async (job) => {
-        console.log(`[bunqueue] Job received: ${job.id}`);
+        if (jobProcessor) {
+          await jobProcessor(job.data);
+        } else {
+          console.log(`[bunqueue] No processor set, job ${job.id} ignored`);
+        }
       },
     });
 
