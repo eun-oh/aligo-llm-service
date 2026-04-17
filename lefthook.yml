@@ -3,12 +3,12 @@ pre-commit:
   jobs:
     - name: format
       glob: "*.{js,ts,json,md}"
-      run: bun format {staged_files}
+      run: bun run format {staged_files}
       stage_fixed: true
 
     - name: lint
       glob: "*.{js,ts}"
-      run: run lint {staged_files}
+      run: bun run lint {staged_files}
 
 pre-push:
   parallel: true
