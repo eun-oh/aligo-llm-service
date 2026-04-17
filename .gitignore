@@ -7,3 +7,5 @@ node_modules/
 
 docs/phase-0-results/
 test-diffs/
+
+data/

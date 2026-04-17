@@ -147,5 +147,6 @@ The same review surfaces 3 high-confidence findings. All three are actionable. T
 - `docs/brainstorms/phase-0-llm-validation-requirements.md` — Phase 0 requirements
 - `docs/plans/2026-04-16-001-feat-phase-0-llm-validation-plan.md` — Phase 0 execution plan
 - `docs/phase-0-results/decision.md` — model selection decision
-- `src/features/pr-review/prompts/review-brief.txt` — the prompt template (v1)
+- `src/domain/pr-review/prompts/review-brief.txt` — the prompt template (v1)
+- `docs/solutions/best-practices/hexagonal-effect-ts-pr-review-pipeline-2026-04-17.md` — Phase 1 implementation patterns (companion to this ADR)
 - Design doc: `~/.gstack/projects/aligo-llm-service/thinline20-main-design-20260416-100519.md`
