@@ -1,0 +1,29 @@
+{
+  "name": "aligo-llm-service",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --watch src/main.ts",
+    "start": "bun run src/main.ts",
+    "format": "oxfmt",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "check-types": "tsc",
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "prepare": "lefthook install"
+  },
+  "dependencies": {
+    "@effect/platform": "^0.96.0",
+    "bunqueue": "^2.7.5",
+    "drizzle-orm": "^0.45.2",
+    "effect": "^3.21.0",
+    "elysia": "1"
+  },
+  "devDependencies": {
+    "@types/bun": "1",
+    "lefthook": "^2.1.6",
+    "oxfmt": "^0.45.0",
+    "oxlint": "^1.60.0",
+    "typescript": "^6"
+  }
+}
